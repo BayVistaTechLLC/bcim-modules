@@ -20,12 +20,6 @@ resource "google_compute_instance" "instance" {
 
   tags = length(var.tags) > 0 ? var.tags : null
 
-  dynamic "metadata" {
-    for_each = var.startup_script != "" ? [1] : []
-    content {
-    }
-  }
-
   metadata = var.startup_script != "" ? { startup-script = var.startup_script } : {}
 
   dynamic "service_account" {

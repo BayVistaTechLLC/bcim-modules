@@ -31,7 +31,7 @@ resource "google_cloud_scheduler_job" "job" {
       uri         = local.resolved_uri
       http_method = var.http_method
 
-      body = var.body != "" ? base64encode(var.body) : null
+      body    = var.body != "" ? base64encode(var.body) : null
       headers = var.body != "" ? { "Content-Type" = "application/json" } : null
 
       dynamic "oidc_token" {
@@ -40,12 +40,6 @@ resource "google_cloud_scheduler_job" "job" {
           service_account_email = local.sa_email
         }
       }
-    }
-  }
-
-  dynamic "lifecycle" {
-    for_each = var.target_cloud_run_service != "" ? [1] : []
-    content {
     }
   }
 }
